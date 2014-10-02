@@ -60,7 +60,7 @@
         
             {% for project in project_list %}
                 <tr class="model-group">
-                <th scope="row"><a href="/admin/auth/group/">{{ project }}</a></th>
+                <th scope="row"><a href="/admin/auth/group/">{{ project.name }}</a></th>
                 <!-- <td><a href="/admin/auth/group/add/" class="addlink"></a></td> -->
                 <td><a href="/admin/auth/group/" class="changelink">Change</a></td>
                 </tr>
