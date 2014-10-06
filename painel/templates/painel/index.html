@@ -1,91 +1,67 @@
 <!DOCTYPE html>
 <html lang="en-us" >
+
 <head>
-<title>Balcão - Painel</title>
-<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
-<link rel="stylesheet" type="text/css" href="/static/admin/css/dashboard.css" />
-<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
-
-<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
-<script type="text/javascript">window.__admin_utc_offset__ = "0";</script>
-
-<meta name="robots" content="NONE,NOARCHIVE" />
+    <title>Balcão - Painel</title>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/dashboard.css" />
+    <!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
+    <script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+    <script type="text/javascript">window.__admin_utc_offset__ = "0";</script>
+    <meta name="robots" content="NONE,NOARCHIVE" />
 </head>
 
+<body class="dashboard">
+    <!-- Container -->
+    <div id="container">
 
-<body class=" dashboard">
-
-<!-- Container -->
-<div id="container">
-
-    
-    <!-- Header -->
-    <div id="header">
-        <div id="branding">
-        
-<h1 id="site-name"><a href="/admin/">Balcão - Painel</a></h1>
-
-        </div>
-        
-        <div id="user-tools">
-            
+        <!-- Header -->
+        <div id="header">
+            <div id="branding">
+                <h1 id="site-name"><a href="/admin/">Balcão - Painel</a></h1>
+            </div>
+            <div id="user-tools">
                 <a href="/admin/logout/">Log out</a>
-            
+            </div>
         </div>
-        
-        
+        <!-- END Header -->
+
+        <!-- Content -->
+        <div id="content" class="colMS">
+            <h1>Painel</h1>
+            <div id="content-main">
+                {% if project_list %}
+                <div class="app-auth module">
+                    <table>
+                        <caption>
+                            <a href="/admin/auth/" class="section" title="Models in the Authentication and Authorization application">Projects</a>
+                        </caption>
+                        {% for project in project_list %}
+                        <tr class="model-group">
+                            <th scope="row"><a href="/admin/auth/group/">{{ project.name }}</a></th>
+                            <td>
+                                <a href="/admin/auth/group/" class="changelink">Change</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>    
+                {% else %}
+                <h1>Nenhum projeto...</h1>
+                {% endif %}
+                <br/>
+
+                <form>
+                    <h1>Adicionar projeto</h1>
+                    <input type="text" /> <input type="submit" value="Criar" />
+                </form>
+            </div>
+            <div id="footer"></div>
+        </div>
+        <!-- END Content -->
+
     </div>
-    <!-- END Header -->
-    
-    
-
-    
-        
-    
-
-    <!-- Content -->
-    <div id="content" class="colMS">
-        
-        <h1>Painel</h1>
-        
-<div id="content-main">
-
-
-{% if project_list %}
-        <div class="app-auth module">
-        <table>
-        <caption>
-            <a href="/admin/auth/" class="section" title="Models in the Authentication and Authorization application">Projects</a>
-        </caption>
-        
-            {% for project in project_list %}
-                <tr class="model-group">
-                <th scope="row"><a href="/admin/auth/group/">{{ project.name }}</a></th>
-                <!-- <td><a href="/admin/auth/group/add/" class="addlink"></a></td> -->
-                <td><a href="/admin/auth/group/" class="changelink">Change</a></td>
-                </tr>
-            {% endfor %}
-        
-        </table>
-        </div>    
-{% else %}
-    <h1>Nenhum projeto...</h1>
-{% endif %}
-
-<br/>
-
-<form>
-<h1>Adicionar projeto</h1>
-<input type="text" /> <input type="submit" value="Criar" />
-</form>
-</div>
-
-        
-    <!-- END Content -->
-
-    <div id="footer"></div>
-</div>
-<!-- END Container -->
+    <!-- END Container -->
 
 </body>
 </html>
