@@ -1,9 +1,14 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import patterns, url, include
+from rest_framework import routers
 
 from painel import views
 
+router = routers.DefaultRouter()
+
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+
 urlpatterns = patterns(
     '',
-    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^$', views.CreateProject, name='create_project'),
+    url(r'^api/', include(router.urls)),
 )

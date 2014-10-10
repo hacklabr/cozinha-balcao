@@ -1,19 +1,19 @@
-# coding: utf-8
-
-from django.views.generic import ListView
-from django.views.generic import View
-from painel.models import Project
+from django.contrib.auth.models import User, Group
+from rest_framework import viewsets
+from serializers import UserSerializer, GroupSerializer
 
 
-class IndexView(ListView):
-    template_name = 'painel/index.html'
-    context_object_name = 'project_list'
-
-    def get_queryset(self):
-        projects = Project.objects.all()
-
-        return projects
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
-class CreateProject(View):
-    pass
+class GroupViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows groups to be viewed or edited.
+    """
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer
