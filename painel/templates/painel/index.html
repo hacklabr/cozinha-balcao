@@ -33,14 +33,13 @@
                 {% if project_list %}
                 <div class="app-auth module">
                     <table>
-                        <caption>
-                            Projects
-                        </caption>
+                        <th class="section">Project</th>
+                        <th class="section">Status</th>
                         {% for project in project_list %}
                         <tr class="model-group">
-                            <th scope="row">{{ project.name }}</th>
+                            <th scope="row"><a href="/admin/painel/project/{{ project.id }}">{{ project.name }}</a></th>
                             <td>
-                                <a href="/admin/auth/group/" class="changelink">Change</a>
+                                {{ project.status }}
                             </td>
                         </tr>
                         {% endfor %}
@@ -51,8 +50,8 @@
                 {% endif %}
                 <br/>
 
-                <form>
-                    <h1>Adicionar projeto</h1>
+                <h1>Adicionar projeto</h1>
+                <form action="/painel/create_project" method="post">
                     <input type="text" /> <input type="submit" value="Criar" />
                 </form>
             </div>

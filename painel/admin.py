@@ -1,12 +1,12 @@
 from django.contrib import admin
-from painel.models import ProjetoPessoa
-from painel.models import Projeto
+from painel.models import ProjectPerson
+from painel.models import Project
 from painel.models import Status
-from painel.models import Acao
+from painel.models import Action
 from painel.models import Sensor
 
-admin.site.register(ProjetoPessoa)
-admin.site.register(Projeto)
+admin.site.register(Project)
+admin.site.register(ProjectPerson)
 admin.site.register(Status)
-admin.site.register(Acao)
+admin.site.register(Action)
 admin.site.register(Sensor)

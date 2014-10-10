@@ -4,60 +4,66 @@ from django.db import models
 from django.conf import settings
 
 
-class Projeto(models.Model):
-    nome = models.CharField(max_length=200)
-    slug = models.CharField(max_length=200)
-    cliente_nome = models.CharField(max_length=200)
-    equipe = models.ManyToManyField(settings.AUTH_USER_MODEL,
-                                    through='ProjetoPessoa')
-    created = models.DateTimeField(auto_now_add=True)
-    last_modified = models.DateTimeField(auto_now=True)
-    e_modelo = models.BooleanField(default=False)
+class Status(models.Model):
+    STATUS = [
+        ['created', 'Aguardando início'],
+        ['structured', 'Estrutura criada'],
+        ['development', 'Em desenvolvimento'],
+        ['staging', 'Staging'],
+        ['maturation', 'Em Maturação'],
+        ['maintenance', 'Em Manutenção'],
+        ['delivered', 'Entregue'],
+    ]
+    name = models.CharField(max_length=64, choices=STATUS)
 
     def __str__(self):
         return unicode(self).encode('utf-8')
 
     def __unicode__(self):
-        return self.nome
+        return self.name
 
 
-class Status(models.Model):
-    STATUS = [
-        ['aguardando_inicio', 'Aguardando início'],
-        ['iniciado', 'Iniciado'],
-        ['desenvolvimento', 'Desenvolvimento'],
-        ['staging', 'Staging'],
-        ['maturacao', 'Maturação'],
-        ['manutencao', 'Manutenção'],
-        ['entregue', 'Entregue'],
-    ]
-    nome = models.CharField(max_length=64, choices=STATUS)
-    projeto = models.ForeignKey(Projeto)
+class Project(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.CharField(max_length=200)
+    customer_name = models.CharField(max_length=200)
+    team = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                  through='ProjectPerson')
+    status = models.ForeignKey(Status)
+    created_on = models.DateTimeField(auto_now_add=True)
+    last_modified = models.DateTimeField(auto_now=True)
+    is_model = models.BooleanField(default=False)
+
+    def __str__(self):
+        return unicode(self).encode('utf-8')
+
+    def __unicode__(self):
+        return self.name
 
 
-class Dispositivo(object):
-    nome = models.CharField(max_length=200)
+class Device(object):
+    name = models.CharField(max_length=200)
     python_command_line = models.CharField(max_length=400)
     status = models.ForeignKey(Status)
 
 
-class Sensor(Dispositivo, models.Model):
+class Sensor(Device, models.Model):
     pass
 
 
-class Acao(Dispositivo, models.Model):
+class Action(Device, models.Model):
     pass
 
 
-class ProjetoPessoa(models.Model):
-    PAPEIS = [
-        ['lider', 'Líder'],
-        ['cliente', 'Cliente'],
-        ['desenvolvedor', 'Desenvolvedor'],
+class ProjectPerson(models.Model):
+    ROLES = [
+        ['leader', 'Líder'],
+        ['customer', 'Cliente'],
+        ['developer', 'Desenvolvedor'],
         ]
-    projeto = models.ForeignKey(Projeto)
-    pessoa = models.ForeignKey(settings.AUTH_USER_MODEL)
-    papel = models.CharField(max_length=64, choices=PAPEIS)
+    project = models.ForeignKey(Project)
+    person = models.ForeignKey(settings.AUTH_USER_MODEL)
+    role = models.CharField(max_length=64, choices=ROLES)
 
     def __str__(self):
         return unicode(self).encode('utf-8')
@@ -65,4 +71,4 @@ class ProjetoPessoa(models.Model):
     def __unicode__(self):
         # TODO Usar o first_name e o last_name, apenas se os dois estiverem
         # vazios/nulos usar o username
-        return self.pessoa.username + " em " + self.projeto.nome
+        return self.person.username + " em " + self.project.nome
