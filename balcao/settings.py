@@ -84,6 +84,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 try:
-    form settings_local import *
+    from settings_local import *
 except:
     pass
